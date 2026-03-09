@@ -1,35 +1,53 @@
 import java.util.Scanner;
-import java.util.Deque;
-import java.util.LinkedList;
+
+// PalindromeChecker class encapsulates the logic
+class PalindromeChecker {
+
+    private String text;
+
+    // Constructor
+    public PalindromeChecker(String text) {
+        this.text = text;
+    }
+
+    // Public method to check palindrome
+    public boolean checkPalindrome() {
+
+        // Normalize string: remove spaces and convert to lowercase
+        String normalized = text.replaceAll("\\s+", "").toLowerCase();
+
+        int start = 0;
+        int end = normalized.length() - 1;
+
+        // Compare characters from both ends
+        while (start < end) {
+            if (normalized.charAt(start) != normalized.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+
+        return true;
+    }
+}
 
 public class PalindromeCheckerApp {
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
+
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        Deque<Character> deque = new LinkedList<>();
+        // Encapsulate logic inside the PalindromeChecker object
+        PalindromeChecker checker = new PalindromeChecker(input);
 
-        // Insert characters into deque
-        for (int i = 0; i < input.length(); i++) {
-            deque.addLast(input.charAt(i));
-        }
-
-        boolean isPalindrome = true;
-
-        // Compare front and rear
-        while (deque.size() > 1) {
-            if (deque.removeFirst() != deque.removeLast()) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        if (isPalindrome) {
-            System.out.println("The string is a Palindrome.");
+        if (checker.checkPalindrome()) {
+            System.out.println("The given string is a Palindrome (OOP style).");
         } else {
-            System.out.println("The string is NOT a Palindrome   .");
+            System.out.println("The given string is NOT a Palindrome.");
         }
 
         sc.close();
